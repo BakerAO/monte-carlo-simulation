@@ -3,10 +3,10 @@ import Chance from "chance";
 const chance = new Chance();
 const numberOfGames = 1_000_000;
 
-let correct = 0;
-let incorrect = 0;
-
-const willSwitch = 1;
+let correctSwitch = 0;
+let incorrectSwitch = 0;
+let correctStay = 0;
+let incorrectStay = 0;
 
 for (let i = 0; i < numberOfGames; i++) {
   const car = chance.integer({ min: 1, max: 3 });
@@ -17,21 +17,16 @@ for (let i = 0; i < numberOfGames; i++) {
     openDoor = 3;
   }
 
-  let choice2 = 1;
-  if (willSwitch) {
-    if (openDoor === 2) {
-      choice2 = 3
-    } else {
-      choice2 = 2;
-    }
-  }
-
-  if (choice2 === car) {
-    correct++;
+  if (choice1 === car) {
+    correctStay++;
+    incorrectSwitch++;
   } else {
-    incorrect++;
+    correctSwitch++;
+    incorrectStay++;
   }
 }
 
-console.log({ correct, incorrect });
-console.log(`${correct * 100 / numberOfGames}%`);
+console.log({ correctStay, incorrectStay });
+console.log(`Stay: ${correctStay * 100 / numberOfGames}%`);
+console.log({ correctSwitch, incorrectSwitch });
+console.log(`Switch: ${correctSwitch * 100 / numberOfGames}%`);
